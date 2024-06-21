@@ -83,3 +83,17 @@ def copy_item():
     else:
         shutil.copytree(items[item], new_name)
     print_items("Содержимое текущей папки:", list_dir())
+
+def come_to_dir():
+
+    # Вывод текущего рабочего каталога
+    print("Текущий рабочий каталог:", os.getcwd())
+
+    # Путь к новому рабочему каталогу
+    new_directory=input('Введите путь для смены текущего каталога: ')
+
+    # Смена рабочего каталога
+    os.chdir(new_directory)
+
+    # Проверка, что рабочий каталог изменен
+    print("Новый рабочий каталог:", os.getcwd())

@@ -1,8 +1,8 @@
 import os
 import sys
-from utils.fs_func import new_dir,rm_dir,copy_item,print_items,list_dir,list_files,list_folders
+from utils.fs_func import new_dir,rm_dir,copy_item,print_items,list_dir,list_files,list_folders,come_to_dir
 from utils.acc_func import account_upgrade,display_history,buying
-# from fs_func import list_dir, list_files, list_folders, print_items
+
 
 
 def account():
@@ -75,7 +75,7 @@ def main():
             account()
             pass
         elif choice == '11':
-            pass
+            come_to_dir()
         elif choice == '12':
             print('Выход из программы.')
             break
