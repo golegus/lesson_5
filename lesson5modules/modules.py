@@ -6,8 +6,8 @@ import shutil
 # 2. наши модули
 import famous_persons
 # 3. сторонние модули
-import django
-import numpy
+#import django
+#import numpy
 
 # os - основные функции
 # путь до текущей папки
