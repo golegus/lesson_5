@@ -1,28 +1,66 @@
-import os
-import sys
+import os, sys, json
 from utils.fs_func import new_dir,rm_dir,copy_item,print_items,list_dir,list_files,list_folders,come_to_dir
-from utils.acc_func import account_upgrade,display_history,buying
+from utils.acc_func import get_latest_balance,add_transaction,to_buy, get_bying_history
 
+ 
+def account_info():
+    amount=get_latest_balance()
+    print(f'На Вашем счету {amount}')
+    return amount
 
+def account_upgrade():
+    amount=account_info()
+    up_val = int(input('Введите сумму, на которую желаете пополнить счет: '))
+    amount += up_val
+    add_transaction(amount)
+    print(f'Счет пополнен на {up_val}. На Вашем счету теперь {amount}')
+    return amount
+
+def display_history():
+    buying_history=get_bying_history()
+    print('*'*20)
+    if not buying_history:
+        print('История покупок пуста.')
+    else:
+        for entry in buying_history:
+#            amount = entry.get("amount")
+#            datetime = entry.get("datetime")
+            print(f'{entry.get("name")} - {entry.get("cost")}')
+#            print(*entry.values())
+#        for idx, (name, val) in enumerate(buying_history, start=1):
+#            print(f'{idx}. {name} - {cost}')
+    print('*'*20)
 
 def account():
-    account_money = 0
-    buying_history = []
-
     while True:
-        print('='*10)
+        print('='*20)
         print('1. пополнение счета')
         print('2. покупка')
         print('3. история покупок')
         print('4. выход')
-        print('='*10)
+        print('='*20)
         choice = input('Выберите пункт меню: ')
         if choice == '1':
-            account_money = account_upgrade(account_money)
+            account_upgrade()
         elif choice == '2':
-            account_money, buying_history = buying(account_money, buying_history)
+            account_money=account_info()
+            if account_money == 0:
+                print('На счету нет денег. Вы ничего не можете купить.')
+            else:
+                name = input('Введите название: ')
+                cost = int(input('Введите цену: '))
+#                order = (name,cost)
+                if to_buy(name,cost):
+                    print(f'Вы купили {name} на сумму {cost}')
+                    print('Поздравляем с покупкой!')             
+                else:
+                    print('*'*32)
+                    print(f'* Недостаточно денег на счету! *')
+                    print('*'*32)
+                print('='*20)
+                account_info()
         elif choice == '3':
-            display_history(buying_history)
+            display_history()
         elif choice == '4':
             print('Выход из программы.')
             break
