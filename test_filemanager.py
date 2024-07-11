@@ -41,7 +41,7 @@ def test_list_folders(list_folders_fixt: list):
     items=list_folders()
     assert items==list_folders_fixt
 
-def test_save_dir_to_file(tmpdir: LEGACY_PATH,list_files_fixt: list, list_folders_fixt: list):
+def test_save_dir_to_file(tmpdir,list_files_fixt: list, list_folders_fixt: list):
     files=", ".join(list_files_fixt)
     folders=", ".join(list_folders_fixt)
     file_content=f"files: {files}\nfolders: {folders}\n"
