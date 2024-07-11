@@ -12,7 +12,7 @@ def list_dir_fixt():
     return items
 
 @pytest.fixture
-def list_files_fixt(list_dir_fixt: list):
+def list_files_fixt(list_dir_fixt):
     files=[]
     current_directory = os.getcwd()
     for item in list_dir_fixt:
@@ -21,7 +21,7 @@ def list_files_fixt(list_dir_fixt: list):
     return files
 
 @pytest.fixture
-def list_folders_fixt(list_dir_fixt: list):
+def list_folders_fixt(list_dir_fixt):
     folders=[]
     current_directory = os.getcwd()
     for item in list_dir_fixt:
@@ -29,19 +29,19 @@ def list_folders_fixt(list_dir_fixt: list):
             folders.append(item)
     return folders
 
-def test_list_dir(list_dir_fixt: list):
+def test_list_dir(list_dir_fixt):
     items=list_dir()
     assert items==list_dir_fixt
 
-def test_list_files(list_files_fixt: list):
+def test_list_files(list_files_fixt):
     items=list_files()
     assert items==list_files_fixt
 
-def test_list_folders(list_folders_fixt: list):
+def test_list_folders(list_folders_fixt):
     items=list_folders()
     assert items==list_folders_fixt
 
-def test_save_dir_to_file(tmpdir,list_files_fixt: list, list_folders_fixt: list):
+def test_save_dir_to_file(tmpdir,list_files_fixt, list_folders_fixt):
     files=", ".join(list_files_fixt)
     folders=", ".join(list_folders_fixt)
     file_content=f"files: {files}\nfolders: {folders}\n"
