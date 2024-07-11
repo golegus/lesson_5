@@ -7,6 +7,10 @@ def print_items(msg,items):
     for item in items:
          print(f"{items.index(item)} - {item}")
 
+def items_list(items, separator=","):
+    result=separator.join(items)
+    return result
+    
 def list_dir():
     items=[]
     for item in os.listdir():
@@ -36,6 +40,13 @@ def list_folders():
         if os.path.isdir(os.path.join(current_directory, item)):
             folders.append(item)
     return folders
+
+def save_dir_to_file(file_path="listdir.txt", encoding='utf-8'):  
+    files=", ".join(list_files())
+    folders=", ".join(list_folders())               
+    with open(file_path, 'w', encoding=encoding) as file:
+        file.write(f"files: {files}\n")
+        file.write(f"folders: {folders}\n")
 
 def ask_todo(input_msg):
     items=list_dir()

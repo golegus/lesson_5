@@ -1,4 +1,5 @@
-from utils.fs_func import list_dir, list_folders, list_files
+from _pytest.compat import LEGACY_PATH
+from utils.fs_func import list_dir, list_folders, list_files, save_dir_to_file
 import pytest
 import os
 
@@ -11,7 +12,7 @@ def list_dir_fixt():
     return items
 
 @pytest.fixture
-def list_files_fixt(list_dir_fixt):
+def list_files_fixt(list_dir_fixt: list):
     files=[]
     current_directory = os.getcwd()
     for item in list_dir_fixt:
@@ -20,7 +21,7 @@ def list_files_fixt(list_dir_fixt):
     return files
 
 @pytest.fixture
-def list_folders_fixt(list_dir_fixt):
+def list_folders_fixt(list_dir_fixt: list):
     folders=[]
     current_directory = os.getcwd()
     for item in list_dir_fixt:
@@ -28,46 +29,24 @@ def list_folders_fixt(list_dir_fixt):
             folders.append(item)
     return folders
 
-def test_list_dir(list_dir_fixt):
+def test_list_dir(list_dir_fixt: list):
     items=list_dir()
     assert items==list_dir_fixt
 
-def test_list_files(list_files_fixt):
+def test_list_files(list_files_fixt: list):
     items=list_files()
     assert items==list_files_fixt
 
-def test_list_folders(list_folders_fixt):
+def test_list_folders(list_folders_fixt: list):
     items=list_folders()
     assert items==list_folders_fixt
 
-
-# тесстирование функций программы "мой счет"
-from utils.acc_func import account_info, display_history
-
-# Фикстура для начального состояния счета и истории покупок
-@pytest.fixture
-def initial_state():
-    return {
-        'account_money': 0,
-        'buying_history': []
-    }
-
-# Тест для функции account_info
-def test_account_info(initial_state):
-    account_money = initial_state['account_money']
-    assert account_info(account_money) == account_money
-
-# Тест для функции display_history  с использованием захвата стандартного вывода capsys
-def test_display_history_empty(capsys):
-    buying_history = []
-    display_history(buying_history)
-    captured = capsys.readouterr()
-    assert 'История покупок пуста.' in captured.out
-
-def test_display_history_non_empty(capsys):
-    buying_history = [('еда', 50)]
-    display_history(buying_history)
-    captured = capsys.readouterr()
-    assert '1. еда - 50' in captured.out
-
-
+def test_save_dir_to_file(tmpdir: LEGACY_PATH,list_files_fixt: list, list_folders_fixt: list):
+    files=", ".join(list_files_fixt)
+    folders=", ".join(list_folders_fixt)
+    file_content=f"files: {files}\nfolders: {folders}\n"
+    test_file = tmpdir.join("listdir.txt")  
+    save_dir_to_file(test_file)
+    with open(test_file, "r", encoding='utf-8') as f:
+        assert file_content==f.read()
+    

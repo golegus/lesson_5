@@ -96,8 +96,8 @@ def append_to_json_file(new_data, file_path, encoding):
     :param new_data: Новые данные для добавления в JSON файл.
     :return: True если все получилось, False в противном случае.
     """
-#    directory = os.path.dirname(file_path)
-#    create_directory_if_not_exists(directory)
+    directory = os.path.dirname(file_path)
+    create_directory_if_not_exists(directory)
 
     data = read_json_file(file_path, encoding)
     if data is not None:
@@ -137,7 +137,7 @@ def get_bying_history(file_path='expence_history.json', encoding='utf-8'):
 
 def to_buy(name, cost, expence_file='expence_history.json', transaction_file='transactions.json', encoding='utf-8'):
 #   проверяем счет 
-    account_balance=get_latest_balance()
+    account_balance=get_latest_balance(transaction_file, encoding)
     if account_balance<cost:
         return False
     else:
