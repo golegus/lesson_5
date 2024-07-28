@@ -8,33 +8,25 @@ def print_items(msg,items):
          print(f"{items.index(item)} - {item}")
 
 def list_dir():
-    items=[]
-    for item in os.listdir():
-        items.append(item)
+    items=[item for item in os.listdir()]
     return items
 
 def is_file(item):
     items=list_dir()
-    current_directory = os.getcwd()
+    current_directory = os.getcwd()    
     if os.path.isfile(os.path.join(current_directory, items[item])):
         return True
     elif os.path.isdir(os.path.join(current_directory, items[item])):
         return False
     
 def list_files():
-    files=[]
     current_directory = os.getcwd()
-    for item in list_dir():
-         if os.path.isfile(os.path.join(current_directory, item)):
-             files.append(item)
+    files = [item for item in list_dir() if os.path.isfile(os.path.join(current_directory, item))]
     return files
 
 def list_folders():
-    folders=[]
     current_directory = os.getcwd()
-    for item in list_dir():
-        if os.path.isdir(os.path.join(current_directory, item)):
-            folders.append(item)
+    folders = [item for item in list_dir() if os.path.isdir(os.path.join(current_directory, item))]
     return folders
 
 def ask_todo(input_msg):
