@@ -5,27 +5,20 @@ import os
 
 @pytest.fixture
 def list_dir_fixt():
-    items=[]
-    for item in os.listdir():
-        items.append(item)
+    items=[item for item in os.listdir()]
     return items
 
 @pytest.fixture
 def list_files_fixt(list_dir_fixt):
-    files=[]
     current_directory = os.getcwd()
-    for item in list_dir_fixt:
-         if os.path.isfile(os.path.join(current_directory, item)):
-             files.append(item)
+    files = [item for item in list_dir_fixt if os.path.isfile(os.path.join(current_directory, item))]
     return files
 
 @pytest.fixture
 def list_folders_fixt(list_dir_fixt):
     folders=[]
     current_directory = os.getcwd()
-    for item in list_dir_fixt:
-        if os.path.isdir(os.path.join(current_directory, item)):
-            folders.append(item)
+    folders = [item for item in list_dir_fixt if os.path.isdir(os.path.join(current_directory, item))]
     return folders
 
 def test_list_dir(list_dir_fixt):
@@ -39,7 +32,6 @@ def test_list_files(list_files_fixt):
 def test_list_folders(list_folders_fixt):
     items=list_folders()
     assert items==list_folders_fixt
-
 
 # тесстирование функций программы "мой счет"
 from utils.acc_func import account_info, display_history
