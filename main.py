@@ -1,8 +1,15 @@
 import os
 import sys
-from utils.fs_func import new_dir,rm_dir,copy_item,print_items,list_dir,list_files,list_folders,come_to_dir
+from utils.fs_func_old import new_dir,rm_dir,copy_item,print_items,list_dir,list_files,list_folders,come_to_dir
 from utils.acc_func import account_upgrade,display_history,buying
 
+# def print_asterisk(fn):
+#     def wrapper(*args, **kwargs):
+#         print('='*20)
+#         res=fn(*args, **kwargs)
+#         print('='*20)
+#         return res
+#     return wrapper
 
 
 def account():
@@ -31,6 +38,7 @@ def account():
 
 
 def main():
+
     while True:
         print('='*20)
         print("1 - создать папку;")
@@ -80,7 +88,7 @@ def main():
             print('Выход из программы.')
             break
         else:
-            print('Неверный пункт меню. Попробуйте снова.')
+            print('Такого пункта нет. Попробуйте снова.')
         
         input("\nНажмите Enter для продолжения...")
 
